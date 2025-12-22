@@ -1,42 +1,56 @@
 # Sync Service
 
-Data synchronization across systems.
+Data synchronization across database collections.
 
 ## What It Does
 
-The Sync Service manages data synchronization between the platform and external systems — keeping data consistent across multiple sources, handling conflicts, and ensuring eventual consistency for distributed data.
+The Sync Service manages data synchronization across Firestore collections and documents within the platform. It enables bulk patching and deletion of documents when data in one collection changes and needs to be reflected in related documents — maintaining referential consistency for denormalized data.
 
 ## Key Capabilities
 
-| Capability | Description |
-|------------|-------------|
-| **Bi-directional Sync** | Sync data in both directions with external systems |
-| **Conflict Resolution** | Handle conflicts when data changes in multiple places |
-| **Incremental Sync** | Efficiently sync only changed data |
-| **Sync Scheduling** | Configure sync frequency and timing |
-| **Sync History** | Track sync operations and their results |
-| **Error Recovery** | Handle and recover from sync failures |
+| Capability               | Description                                                   |
+| ------------------------ | ------------------------------------------------------------- |
+| **Collection Patching**  | Bulk update documents across a collection with new values     |
+| **Document Patching**    | Update individual documents at specific paths                 |
+| **Collection Deletion**  | Bulk delete all documents in a collection                     |
+| **Document Deletion**    | Delete individual documents at specific paths                 |
+| **Paginated Processing** | Process large collections in batches (default: 100 docs/page) |
+| **Async Task Queue**     | Reliable, asynchronous processing via task queues             |
 
 ## How It Fits Together
 
 ```
-┌─────────────────┐     ┌─────────────────┐
-│    Platform     │◄───►│  Sync Service   │
-│     Data        │     │                 │
-└─────────────────┘     └────────┬────────┘
-                                 │
-                                 ▼
-                        ┌─────────────────┐
-                        │ External System │
-                        │  (CRM, ERP...)  │
-                        └─────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                     Request Entry Point                      │
+│  TaskService: requestCollectionPatch, requestDocumentPatch,  │
+│               requestCollectionDeletion, requestDocumentDeletion │
+└─────────────────────────┬────────────────────────────────────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │   Task Queue    │
+                 └────────┬────────┘
+                          │
+                          ▼
+          ┌───────────────────────────────┐
+          │      Task Processor           │
+          │  (Paginated Batch Processing) │
+          └───────────────┬───────────────┘
+                          │
+            ┌─────────────┴─────────────┐
+            │                           │
+            ▼                           ▼
+   ┌─────────────────┐        ┌─────────────────┐
+   │  Collection A   │        │  Collection B   │
+   │   (source)      │        │   (target)      │
+   └─────────────────┘        └─────────────────┘
 ```
 
-The Sync Service acts as a bridge, keeping platform data in sync with external systems.
+The Sync Service propagates changes from source documents to related documents across collections.
 
 ## Common Use Cases
 
-- **CRM synchronization**: Keep customer data in sync with Salesforce
-- **HR system sync**: Sync employee data with HRIS platforms
-- **Inventory sync**: Keep product availability current across systems
-- **Calendar sync**: Synchronize schedules with external calendars
+- **Denormalized data updates**: When a product name changes, update all subscription documents that reference that product
+- **Bulk data migrations**: Sync fields across documents during data migrations
+- **Cascading updates**: Propagate user profile changes to all related records
+- **Collection cleanup**: Delete all member documents when a community is removed

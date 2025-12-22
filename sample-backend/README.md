@@ -44,7 +44,7 @@ Each domain is implemented as composable packages — use what you need, extend 
 │   ├── service-notifications/
 │   ├── service-files/
 │   ├── service-customer/
-│   └── ...                # 26+ microservices total
+│   └── ...                # 20+ microservices total
 │
 └── service-example/       # Working example microservice demonstrating patterns
 ```

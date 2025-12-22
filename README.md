@@ -35,7 +35,7 @@ Where most platforms offer fragments or point solutions, Engineering11 delivers 
 
 ## What’s Included
 
-- 26+ production microservices covering core platform domains
+- 20+ production microservices covering core platform domains
 - Standardized backend service patterns (REST, async jobs, event-driven workflows)
 - Frontend SDKs for Angular, React, React Native, and Flutter
 - Hundreds of reusable accelerator libraries and shared utilities
