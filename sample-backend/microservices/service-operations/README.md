@@ -1,43 +1,40 @@
 # Operations Service
 
-Platform operations and administrative functions.
+Platform operations background tasks.
 
 ## What It Does
 
-The Operations Service provides administrative and operational capabilities for managing the platform — tenant provisioning, system health monitoring, configuration management, and maintenance tasks.
+The Operations Service runs scheduled maintenance tasks.
 
 ## Key Capabilities
 
-| Capability | Description |
-|------------|-------------|
-| **Tenant Provisioning** | Create and configure new tenant environments |
-| **System Health** | Monitor service health and dependencies |
-| **Configuration Management** | Manage platform-wide and tenant-specific settings |
-| **Maintenance Tasks** | Run scheduled and on-demand maintenance operations |
-| **Feature Flags** | Control feature rollout across the platform |
-| **Admin Tools** | Administrative interfaces for platform operators |
+| Capability            | Description                          |
+| --------------------- | ------------------------------------ |
+| **Maintenance Tasks** | Run scheduled maintenance operations |
 
 ## How It Fits Together
 
 ```
 ┌─────────────────┐
+│     Cloud       │
+│   Scheduler     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
 │   Operations    │
 │    Service      │
 └────────┬────────┘
          │
-    ┌────┴────────────┐
-    ▼                 ▼
-┌───────────┐   ┌───────────┐
-│  All      │   │  Config   │
-│ Services  │   │  Store    │
-└───────────┘   └───────────┘
+         ▼
+   ┌───────────┐
+   │  API      │
+   │ Gateways  │
+   └───────────┘
 ```
 
-The Operations Service has elevated access to manage and configure all other services in the platform.
+The Operations Service has elevated access to gather metadata on all API Gateways in a project
 
 ## Common Use Cases
 
-- **New customer setup**: Provision a new tenant with all required resources
-- **Feature rollout**: Gradually enable new features for specific tenants
-- **Health monitoring**: Dashboard of all service statuses
-- **Data maintenance**: Scheduled cleanup and optimization tasks
+- **Gateway Warming**: Periodically send keep-alive requests to all API Gateways in a project, to keep them from going idle. Prevents latency spikes when another service hasn't been invoked for a long time.
