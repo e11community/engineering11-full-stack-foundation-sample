@@ -24,6 +24,8 @@ The repository includes a working example of a custom microservice alongside doc
 
 ## Repository Structure
 
+The example custom microservice included in this repository is named **service-example** and lives alongside the Engineering11 platform services to demonstrate how customer-built services integrate and operate within the same backend structure.
+
 ```
 ├── microservices/                 # All backend microservices (platform + custom)
 │   ├── service-user/              # Engineering11 platform microservice
