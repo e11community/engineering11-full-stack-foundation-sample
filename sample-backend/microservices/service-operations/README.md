@@ -20,17 +20,23 @@ The Operations Service provides critical infrastructure capabilities that keep t
 ## How It Fits Together
 
 ```
-┌─────────────────┐
-│   Operations    │
-│    Service      │
-└────────┬────────┘
-         │
-    ┌────┴────────────┬──────────────┐
-    ▼                 ▼              ▼
-┌──────────┐   ┌─────────────┐  ┌──────────┐
-│   API    │   │   PubSub    │  │  Cloud   │
-│ Gateways │   │   Topics    │  │ Scheduler│
-└──────────┘   └─────────────┘  └──────────┘
+       ┌───────────┐
+       │  Cloud    │
+       │ Scheduler │
+       └─────┬─────┘
+             │
+             ▼
+    ┌─────────────────┐
+    │   Operations    │
+    │    Service      │
+    └────────┬────────┘
+             │
+    ┌────────┴────────┐
+    ▼                 ▼
+┌──────────┐   ┌─────────────┐
+│   API    │   │   PubSub    │
+│ Gateways │   │   Topics    │
+└──────────┘   └─────────────┘
 ```
 
 The Operations Service discovers and warms API gateways across regions, publishes request events for analytics, and exposes scheduler-protected endpoints for maintenance operations.
