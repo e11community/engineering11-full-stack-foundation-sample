@@ -47,7 +47,7 @@ Where most platforms offer fragments or point solutions, Engineering11 delivers 
 - Secure identity, multi-tenancy, file storage, notifications, and real-time primitives
 - We **design, provision, and codify** your infrastructure in your own cloud environment using Terraform and repeatable deployment patterns.
 
-## What You Own
+## What Your Team Builds
 
 - Product-specific business logic and workflows
 - Domain models and data behavior
