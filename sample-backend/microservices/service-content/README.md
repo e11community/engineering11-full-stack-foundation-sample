@@ -460,7 +460,7 @@ ContentIndexService:
 
 ContentService.documentToSearch():
   - Queries current document
-  - Sends to AlgoliaIndex for indexing
+  - Sends to search Index for indexing
   - Returns false if document not found
   - Logs debug message on failure
 
