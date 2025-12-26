@@ -11,7 +11,7 @@ The Auth Service handles authentication, session management, and authorization f
 | Capability                       | Description                                                                            |
 | -------------------------------- | -------------------------------------------------------------------------------------- |
 | **Large-Scale Token Management** | Batch update JWT custom claims for 150+ users when products/roles change               |
-| **Multi-Tenant Provisioning**    | Automatically provision Firebase Identity Platform tenants + reCAPTCHA keys per tenant |
+| **Multi-Tenant Provisioning**    | Automatically provision Identity Platform tenants + reCAPTCHA keys per tenant |
 | **Token Lifecycle Management**   | Automatic token revocation on user deactivation/reactivation/deletion                  |
 | **Batch Processing**             | Background jobs handle bulk custom claims updates across customer bases                |
 | **Event-Driven Architecture**    | Publishes auth events (user created/deleted, claims updated) for audit trails          |
@@ -38,13 +38,13 @@ The Auth Service handles authentication, session management, and authorization f
 └────────────────────┼─────────────────────────────────────-┘
                      │
         ┌────────────┼────────────┐
-        │            │            │
-        ▼            ▼            ▼
-┌──────────────┐  ┌────────┐  ┌─────────────┐
-│ Task Queues  │  │Events  │  │User Service │
-│(Custom Claims│  │(Audit) │  │(Profile Sync│
-│ Updates)     │  │        │  │)            │
-└──────────────┘  └────────┘  └─────────────┘
+        │                         │
+        ▼                         ▼
+┌──────────────┐          ┌─────────────
+│ Task Queues  │          │User Service │
+│(Custom Claims│          │(Profile Sync│
+│ Updates)     │          │             │ 
+└──────────────┘          └─────────────┘
 ```
 
 ## Heavy-Lifting Features
@@ -65,7 +65,7 @@ UpdateCustomClaimsJob:
 **What customers avoid:**
 
 - Writing batch processing logic
-- Managing Firebase API rate limits
+- Managing API rate limits
 - Coordinating with customer/product services
 - Handling partial failures in batch updates
 
@@ -75,7 +75,7 @@ Each tenant gets isolated auth infrastructure automatically:
 
 ```typescript
 AuthBootstrapService.createForHost(hostname):
-  - Creates Firebase Identity Platform tenant
+  - Creates Identity Platform tenant
   - Provisions reCAPTCHA Enterprise key
   - Configures domain allowlists
   - Returns tenant ID + site key
@@ -116,7 +116,7 @@ EmailActionService handles:
 - Building custom email verification systems
 - Generating secure password reset links
 - Managing email delivery infrastructure
-- Handling Firebase rate limits
+- Handlind rate limits
 
 ### 5. Event-Driven Auditing
 
@@ -168,7 +168,7 @@ POST /internal/update-custom-claims  - Bulk update user claims
 ## Common Use Cases
 
 - **Product catalog changes**: Automatically refresh JWT tokens for 1000s of users when product assignments change
-- **Tenant onboarding**: Provision complete auth infrastructure (Firebase tenant + reCAPTCHA) in one API call
+- **Tenant onboarding**: Provision complete auth infrastructure (tenant + reCAPTCHA) in one API call
 - **User deactivation**: Revoke all active sessions and disable login with single command
 - **Custom claims sync**: Batch update user roles/products when organization structure changes
 - **Email verification**: Send verification emails with custom branded links
