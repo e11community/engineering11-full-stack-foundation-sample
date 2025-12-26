@@ -11,9 +11,13 @@
 
 # Engineering11 Full Stack Foundation — Sample Repository
 
-This repository is a **representative sample** of the Engineering11 Full Stack Foundation developer experience.
+This repository is a representative sample of the Engineering11 Full Stack Foundation developer experience.
 
-It is designed for engineers evaluating Engineering11 during technical discovery, architecture reviews, or onboarding discussions. The intent is to show how real, production software is structured when built on top of the Engineering11 foundation.
+The **backend directory contains placeholder microservice READMEs** that describe the role, responsibilities, and interaction patterns of each service within a typical Engineering11 system. These are intentionally illustrative, focusing on architecture, boundaries, and conventions rather than full implementations.
+
+The **frontend directory contains a real, working starting point** that demonstrates how engineers build product-facing applications on top of the Engineering11 foundation, including structure, integration patterns, and day-to-day developer workflow.
+
+This repository is designed for engineers evaluating Engineering11 during technical discovery or onboarding discussions, and is meant to convey how real production systems are structured when built on top of the Engineering11 Full Stack Foundation.
 
 The core questions this repo helps answer is:
 
